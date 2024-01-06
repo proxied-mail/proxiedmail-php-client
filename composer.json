@@ -1,0 +1,31 @@
+{
+    "name": "proxiedmail/php-client",
+    "type": "library",
+    "description": "Library for working with ProxiedMail API",
+    "license": "LGPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "ProxiedMail\\Client\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alex Yatsenko",
+            "email": "abrouter@proxiedmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "guzzlehttp/guzzle": "^6.5 || ^7.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "php-di/php-di": "^6.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ProxiedMail\\Client\\Tests\\": "tests/"
+        }
+    }
+}

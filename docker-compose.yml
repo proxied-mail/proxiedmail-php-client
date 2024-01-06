@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: pxdmail-php-client
+    image: pxdmail-php-client:pxdmail-php-client
+    container_name: pxdmail-php-client
+    hostname: docker-dev-local-om
+    ports:
+      - "1022:80"
+    volumes:
+      - .:/app
