@@ -85,3 +85,26 @@ composer require proxiedmail/proxiedmail-php-client
 ```
 
 
+
+#### Create proxy-email
+
+```php
+<?php
+        $api = $this->getApiReady();
+
+        $pb = $api->createProxyEmail(
+            [
+                'blabla@proxiedmail-int.int',
+            ],
+            uniqid() . '@proxiedmail.com',
+            null,
+            null
+        );
+
+        $pb->getId(); //string ID, A1131D57-6000-0000-00000BAE
+        $pb->getAddressDetailedCollectionEntity(); //@see RealAddressDetailedCollectionEntity::class
+        $pb->getProxyAddress(); //blabla@proxiedmail.com
+        $pb->getReceivedEmails(); // 0
+        $pb->getTypeValue(); // 0 - Regular, 1 - news
+```
+
