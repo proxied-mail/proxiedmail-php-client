@@ -44,5 +44,44 @@ composer require proxiedmail/proxiedmail-php-client
         $apiToken = $facade->getApiToken();
 ```
 
+#### Webhook
+
+```php
+<?php
+        $api = $this->getApiReady();
+        $wh = $api->createWebhook();
+
+        $status = $api->statusWebhook($wh->getId());
+
+        $status->isReceived(); // false
+        $status->getMethod(); //null
+        $status->getPayload(); //null
+
+
+        //make a post call to $wh->call_url
+        $url = $wh->getCallUrl();
+        $data = [
+            'key1' => 'value1',
+            'key2' => 'value2'
+        ];
+
+        $options = [
+            'http' => [
+                'header' => "Content-type: application/json",
+                'method' => 'POST',
+                'content' => json_encode($data),
+            ],
+        ];
+
+        $context = stream_context_create($options);
+        file_get_contents($url, false, $context);
+
+
+        $status = $api->statusWebhook($wh->getId());
+
+        $status->isReceived(); //true;
+        $status->getMethod(); //POST
+        $status->getPayload(); //same what we have in $data
+```
 
 
