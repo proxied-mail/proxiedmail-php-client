@@ -114,6 +114,7 @@ composer require proxiedmail/proxiedmail-php-client
 ```php
 <?php
         $api = $this->getApiReady();
+        $wh = $api->getProxyEmails();
         /**
          * @var ProxyBindingEntity $pb
          */
