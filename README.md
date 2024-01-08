@@ -32,7 +32,7 @@ composer require proxiedmail/proxiedmail-php-client
         /**
          * @var ApiFacade $facade
          */
-        $facade = $di->b($di)->create(ApiFacade::class);
+        $facade = PxdMailApinitializer::init();
         /**
          * @var OauthAccessTokenEntity $r
          */
@@ -48,7 +48,7 @@ composer require proxiedmail/proxiedmail-php-client
 
 ```php
 <?php
-        $api = $this->getApiReady();
+        $api = $this->getApiReady(); //facade
         $wh = $api->createWebhook();
 
         $status = $api->statusWebhook($wh->getId());
@@ -125,3 +125,28 @@ composer require proxiedmail/proxiedmail-php-client
 #### Other examples
 
 Also see other examples in https://github.com/proxied-mail/proxiedmail-php-client/tree/main/tests/Integration
+
+#### Auth advise
+
+Authorize first with your email and password.
+Then use received Bearer token to receive your API key.
+
+You can also get your API token on "Settings" section in your ProxiedMail account: https://proxiedmail.com/en/settings .
+You can hardcode this token to your application as it's have no expiration date.
+Please text us if you want to revoke it.
+
+#### Dependency Injection
+
+As you may see we have DI built-in in our client to make less dependencies as it just a single class.
+
+
+```php
+<?php
+        $api = PxdMailApinitializer::init();
+        // OR
+        $config = new Config('HOST', 'API_TOKEN', 'Bearer token'); //everything nullable
+        $api = PxdMailApinitializer::init($config);
+```
+
+Please note that if you want to change config in terms of host, bearer or api token over program execution 
+please RE-Initialize via PxdMailApinitializer::init() with new config object.

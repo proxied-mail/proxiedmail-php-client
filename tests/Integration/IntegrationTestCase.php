@@ -23,16 +23,11 @@ class IntegrationTestCase extends BaseTestCase
         $email = $this->envValue('TESTS_AUTH_EMAIL');
         $pass = $this->envValue('TESTS_AUTH_PASSWORD');
 
-        $di = new InternalDi();
-
-        /**
-         * @var ApiFacade $facade
-         */
-        $facade = $di->b($di)->create(ApiFacade::class);
+        $api = PxdMailApinitializer::init();
         /**
          * @var OauthAccessTokenEntity $r
          */
-        $r = $facade->login($email, $pass);
+        $r = $api->login($email, $pass);
         return $r;
     }
 
