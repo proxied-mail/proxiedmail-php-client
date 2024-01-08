@@ -43,13 +43,18 @@ composer require proxiedmail/php-client
         $facade = PxdMailApinitializer::init($config);
 
         $apiToken = $facade->getApiToken();
+
+        $config = new Config();
+        $config->setApiToken($apiToken->getApiToken());
+
+        $facade = PxdMailApinitializer::init($config)
 ```
 
 #### Webhook
 
 ```php
 <?php
-        $api = $this->getApiReady(); //facade
+        $api = $this->getApiReady(); //let's imagine we have ApiFacade here 
         $wh = $api->createWebhook();
 
         $status = $api->statusWebhook($wh->getId());
