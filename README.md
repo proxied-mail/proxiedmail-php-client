@@ -108,3 +108,14 @@ composer require proxiedmail/proxiedmail-php-client
         $pb->getTypeValue(); // 0 - Regular, 1 - news
 ```
 
+
+#### Proxy-emails list
+
+```php
+<?php
+        $api = $this->getApiReady();
+        /**
+         * @var ProxyBindingEntity $pb
+         */
+        $pb = $wh->getProxyBindings()[0];
+```
