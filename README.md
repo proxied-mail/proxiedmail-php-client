@@ -149,4 +149,4 @@ As you may see we have DI built-in in our client to make less dependencies as it
 ```
 
 Please note that if you want to change config in terms of host, bearer or api token over program execution 
-please RE-Initialize via PxdMailApinitializer::init() with new config object.
+please RE-Initialize via `PxdMailApinitializer::init()` with new config object.
