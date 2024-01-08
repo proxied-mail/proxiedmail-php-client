@@ -1,6 +1,6 @@
 # Proxiedmail-php-client
 
-Welcome to ProxiedMail API client.
+Welcome to [ProxiedMail](https://proxiedmail.com) API client.
 You're welcome to [visit the docs](https://docs.proxiedmail.com).
 
 ### Features
@@ -11,10 +11,11 @@ You're welcome to [visit the docs](https://docs.proxiedmail.com).
 
 🔴 Proxy-emails CRUD (create, read, update, todo: delete)
 
+
 ### Installation
 
 ```bash
-composer require proxiedmail/proxiedmail-php-client
+composer require proxiedmail/php-client
 ```
 
 ### Examples
