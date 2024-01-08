@@ -120,3 +120,8 @@ composer require proxiedmail/proxiedmail-php-client
          */
         $pb = $wh->getProxyBindings()[0];
 ```
+
+
+#### Other examples
+
+Also see other examples in https://github.com/proxied-mail/proxiedmail-php-client/tree/main/tests/Integration
