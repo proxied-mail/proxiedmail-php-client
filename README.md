@@ -28,8 +28,6 @@ composer require proxiedmail/php-client
         $email = $this->envValue('TESTS_AUTH_EMAIL');
         $pass = $this->envValue('TESTS_AUTH_PASSWORD');
 
-        $di = new InternalDi();
-
         /**
          * @var ApiFacade $facade
          */
