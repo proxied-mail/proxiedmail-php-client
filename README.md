@@ -6,7 +6,9 @@ You're welcome to [visit the docs](https://docs.proxiedmail.com).
 ### Features
 
 🔴 Authorization
+
 🔴 Callback receiver (creating callback urls, read callback payload)
+
 🔴 Proxy-emails CRUD (create, read, update, todo: delete)
 
 ### Installation
