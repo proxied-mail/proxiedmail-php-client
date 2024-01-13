@@ -18,6 +18,13 @@ You're welcome to [visit the docs](https://docs.proxiedmail.com).
 composer require proxiedmail/php-client
 ```
 
+### Test run
+
+```bash
+make test-run
+```
+
+
 ### Examples
 
 
