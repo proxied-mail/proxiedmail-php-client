@@ -1,4 +1,4 @@
-# Proxiedmail-php-client
+# ProxiedMail PHP client
 
 Welcome to [ProxiedMail](https://proxiedmail.com) API client.
 You're welcome to [visit the docs](https://docs.proxiedmail.com).
