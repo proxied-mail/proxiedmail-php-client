@@ -39,7 +39,15 @@ Please note that you have to provide the correct .env file to run the tests. See
 #### Authorization
 
 ```php
-<?php
+        <?php
+        
+        use ProxiedMail\Client\Config\Config;
+        use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;
+        use ProxiedMail\Client\Entrypoint\PxdMailApinitializer;
+        use ProxiedMail\Client\Facades\ApiFacade;
+        
+        require 'vendor/autoload.php';
+        
         $email = $this->envValue('TESTS_AUTH_EMAIL');
         $pass = $this->envValue('TESTS_AUTH_PASSWORD');
 
