@@ -30,7 +30,6 @@ To run:
 ```bash
 make test-run
 ```
-Please note that you have to provide the correct .env file to run the tests. See the example in .env.dist.
 
 
 ### Examples
