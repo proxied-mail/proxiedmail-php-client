@@ -3,6 +3,8 @@
 Welcome to [ProxiedMail](https://proxiedmail.com) API client.
 You're welcome to [visit the docs](https://docs.proxiedmail.com).
 
+[Packagist](https://packagist.org/packages/proxiedmail/php-client)
+
 ### Features
 
 🔴 Authorization
