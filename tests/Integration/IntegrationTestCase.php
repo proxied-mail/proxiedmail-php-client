@@ -56,6 +56,10 @@ class IntegrationTestCase extends BaseTestCase
                 continue;
             }
 
+            if (empty($name) || empty($value)) {
+                continue;
+            }
+
             list($name, $value) = explode('=', $line, 2);
             $name = trim($name);
             $value = trim($value);
