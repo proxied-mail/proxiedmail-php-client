@@ -34,7 +34,7 @@ make test-run
 ```
 
 
-## Getting started: received email to your application
+## Getting started: receiving email to your application
 
 Here in this example you can see how to receive sent email to your API.
 The program will print email address created to receive your email message.
