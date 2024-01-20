@@ -34,6 +34,148 @@ make test-run
 ```
 
 
+## Getting started: received email to your application
+
+Here in this example you can see how to receive sent email to your API.
+The program will print email address created to receive your email message.
+
+```
+PROXY-EMAIL: 4bd6c97b9@proxiedmail.com
+Webhook STATUS: 
+Received: no
+```
+
+Then, just send the email to the printed address. When app receive your message, it will print the following:
+```
+PROXY-EMAIL: 4bd6c97b9@proxiedmail.com
+Webhook STATUS: 
+Received: yes
+WEBHOOK PAYLOAD: 
+{
+   "id":"EB442408-D500-0000-00003CC8",
+   "payload":{
+      "Content-Type":"multipart\/alternative; boundary=\"000000000000714564060f56f6c2\"",
+      "Date":"Sat, 20 Jan 2024 02:00:25 +0000",
+      "Dkim-Signature":"DKIM",
+      "From":"Alex Yatsenko <sender@gmail.com>",
+      "Message-Id":"<CAJj9C9dVhSJZDwRDM-H=vhzPttpg253biEvabFtEHiS4wriK8A@mail.gmail.com>",
+      "Mime-Version":"1.0",
+      "Received":"by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40e9ffab5f2so10064475e9.1 for <4bd6c97b9@proxiedmail.com>; Fri, 19 Jan 2024 18:00:38 -0800 (PST)",
+      "Subject":"hey mate",
+      "To":"4bd6c97b9@proxiedmail.com",
+      "X-Envelope-From":"sender@gmail.com",
+      "X-Mailgun-Incoming":"Yes",
+      "X-Received":"Received details",
+      "body-html":"<div dir=\"ltr\">hey hey<\/div>\r\n",
+      "body-plain":"hey hey\r\n",
+      "domain":"proxiedmail.com",
+      "from":"Alex Alex <sender@gmail.com>",
+      "message-headers":"HEADERS JSON....",
+      "recipient":"4bd6c97b9@proxiedmail.com",
+      "sender":"sender@gmail.com",
+      "signature":"....",
+      "stripped-html":"<div dir=\"ltr\">hey hey<\/div>\n",
+      "stripped-text":"hey hey",
+      "subject":"hey mate",
+      "timestamp":"1705716046",
+      "token":"..."
+   },
+   "attachments":[
+      
+   ],
+   "recipient":{
+      "address":"4bd6c97b9@proxiedmail.com"
+   },
+   "receivedAt":"Sat Jan 20 2024 02:00:46 GMT+0000",
+   "user":{
+      "id":"1B3AAA43-11-0000-cc",
+      "username":"username+t1@gmail.com",
+      "token":"Bearer ...."
+   }
+}
+```
+
+The code to execute is the following
+
+```php
+<?php
+
+use ProxiedMail\Client\Config\Config;
+use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;
+use ProxiedMail\Client\Entrypoint\PxdMailApinitializer;
+use ProxiedMail\Client\Facades\ApiFacade;
+
+require 'vendor/autoload.php';
+
+
+// put here your ProxiedMail credentials
+$email = 'example.com';
+$pass = '1';
+
+/**
+ * @var ApiFacade $facade
+ */
+$facade = PxdMailApinitializer::init();
+/**
+ * @var OauthAccessTokenEntity $r
+ */
+$r = $facade->login($email, $pass);
+
+//settings bearer token
+$config = (new Config())->setBearerToken('Bearer ' . $r->getBearerToken());
+$facade = PxdMailApinitializer::init($config);
+
+//receiving API token by bearer token
+$apiToken = $facade->getApiToken();
+
+$config = new Config();
+
+//setting API token
+$config->setApiToken($apiToken->getApiToken());
+
+$api = PxdMailApinitializer::init($config);
+
+$wh = $api->createWebhook(); //creating webhook-receiver
+$proxyEmail  = $api->createProxyEmail(
+    [],
+    null,
+    $wh->getCallUrl() //specifying webhook url
+);
+
+
+
+// while (true) with 100 seconds limit
+foreach(range(0, 100) as $non) {
+    echo "PROXY-EMAIL: " . $proxyEmail->getProxyAddress() . "\n";
+    echo "Send the email to this proxy-email to get email payload printed here";
+    
+    //checking webhook receiver 
+    $whStatus = $api->statusWebhook($wh->getId());
+
+    echo "Webhook STATUS: \n";
+    echo "Received: " . ($whStatus->isReceived() ? 'yes' : 'no') . "\n"; //printing webhook status
+
+    //printing payload if received
+    if ($whStatus->isReceived()) {
+        echo "WEBHOOK PAYLOAD: \n";
+        echo json_encode($whStatus->getPayload());
+        break;
+    }
+
+
+    echo "\n";
+
+    sleep(1);
+}
+```
+
+To run the example above just create folder, install lib there via composer and
+put it to the file (t.php), then run:
+```bash
+php t.php
+```
+
+
 ### Examples
 
 
@@ -76,6 +218,7 @@ make test-run
 
 ```php
 <?php
+        //it's $facade from the end of previous example
         $api = $this->getApiReady(); //let's imagine we have ApiFacade here 
         $wh = $api->createWebhook();
 
