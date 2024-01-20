@@ -26,6 +26,19 @@ class ProxyBindingTest extends IntegrationTestCase
         $this->assertIsInt($pb->getTypeValue());
     }
 
+
+    public function testCreateProxyBindingEmpty()
+    {
+        $api = $this->getApiReady();
+        $pb = $api->createProxyEmail();
+
+        $this->assertNotEmpty($pb->getId());
+        $this->assertInstanceOf(RealAddressDetailedCollectionEntity::class, $pb->getAddressDetailedCollectionEntity());
+        $this->assertNotEmpty($pb->getProxyAddress());
+        $this->assertIsInt($pb->getReceivedEmails());
+        $this->assertIsInt($pb->getTypeValue());
+    }
+
     public function testCreateProxyBinding()
     {
         $api = $this->getApiReady();

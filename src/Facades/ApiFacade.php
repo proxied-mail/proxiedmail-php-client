@@ -136,10 +136,10 @@ class ApiFacade
     }
 
     public function createProxyEmail(
-        array $realAddresses,
-        string $proxyAddress,
-        ?string $callbackUrl,
-        ?string $description
+        array $realAddresses = [],
+        ?string $proxyAddress = null,
+        ?string $callbackUrl = null,
+        ?string $description = null
     ): ProxyBindingEntity {
         /**
          * @var ProxyBindingEntity|ErrorResponseEntity $r
