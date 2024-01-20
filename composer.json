@@ -25,7 +25,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ProxiedMail\\Client\\Tests\\": "tests/"
+            "ProxiedMail\\Tests\\": "tests/"
         }
     }
 }

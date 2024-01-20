@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace ProxiedMail\Client\Tests\Integration;
+namespace ProxiedMail\Tests\Integration;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use ProxiedMail\Client\Config\Config;
-use ProxiedMail\Client\Core\InternalDi;
 use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;
 use ProxiedMail\Client\Entrypoint\PxdMailApinitializer;
 use ProxiedMail\Client\Facades\ApiFacade;
@@ -50,13 +49,14 @@ class IntegrationTestCase extends BaseTestCase
         $env = file_get_contents(__DIR__ . '/../../.env');
         $envs = [];
         $lines = explode("\n", $env);
+
         foreach ($lines as $line) {
 
             if (strpos(trim($line), '#') === 0) {
                 continue;
             }
 
-            if (empty($name) || empty($value)) {
+            if (empty($line[0]) || empty($line[1])) {
                 continue;
             }
 

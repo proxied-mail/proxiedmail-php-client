@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ProxiedMail\Client\Tests\Integration;
+namespace ProxiedMail\Tests\Integration;
 
 use ProxiedMail\Client\Config\Config;
 use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;

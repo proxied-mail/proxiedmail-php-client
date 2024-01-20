@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ProxiedMail\Client\Tests\Integration;
+namespace ProxiedMail\Tests\Integration;
 
 class WebhookTest extends IntegrationTestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ProxiedMail\Client\Tests\Integration;
+namespace ProxiedMail\Tests\Integration;
 
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\RealAddressDetailedCollectionEntity;
