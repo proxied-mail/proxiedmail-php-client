@@ -20,6 +20,13 @@ composer require proxiedmail/php-client
 
 ### Test run
 
+
+If you want to run tests, make sure .env with credentials present. Copy command:
+```bash
+cp .env.dist .env
+```
+
+To run:
 ```bash
 make test-run
 ```
