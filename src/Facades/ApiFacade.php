@@ -10,6 +10,8 @@ use ProxiedMail\Client\Entities\Endpoints\CreateProxyEmailEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\CreateWebhookReceiverEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\GetApiTokenEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\GetProxyEmailsEndpoint;
+use ProxiedMail\Client\Entities\Endpoints\GetReceivedEmailsDetails;
+use ProxiedMail\Client\Entities\Endpoints\GetReceivedEmailsLinks;
 use ProxiedMail\Client\Entities\Endpoints\GetWebhookStatusEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\UpdateProxyEmailsEndpoint;
 use ProxiedMail\Client\Entities\ResponseEntity\ApiTokenEntity;
@@ -17,6 +19,7 @@ use ProxiedMail\Client\Entities\ResponseEntity\ErrorResponseEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingsCollectionEntity;
+use ProxiedMail\Client\Entities\ResponseEntity\ReceivedEmailLinksEntityCollection;
 use ProxiedMail\Client\Entities\ResponseEntity\ResponseEntityInterface;
 use ProxiedMail\Client\Entities\ResponseEntity\WebhookReceiverEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\WebhookStatusEntity;
@@ -41,6 +44,10 @@ class ApiFacade
 
     private UpdateProxyEmailsEndpoint $updateProxyEmails;
 
+    private GetReceivedEmailsLinks $getReceivedEmailsLinks;
+
+    private GetReceivedEmailsDetails $getReceivedEmailsDetails;
+
     public function __construct(
         EndpointService $endpointService,
         GetProxyEmailsEndpoint $getProxyEmailsEndpoint,
@@ -49,7 +56,9 @@ class ApiFacade
         GetApiTokenEndpoint $getApiTokenEndpoint,
         AuthEndpoint $authEndpoint,
         CreateProxyEmailEndpoint $createProxyEmailEndpoint,
-        UpdateProxyEmailsEndpoint $updateProxyEmails
+        UpdateProxyEmailsEndpoint $updateProxyEmails,
+        GetReceivedEmailsLinks $getReceivedEmailsLinks,
+        GetReceivedEmailsDetails $getReceivedEmailsDetails
     ) {
         $this->endpointService = $endpointService;
         $this->getProxyEmailsEndpoint = $getProxyEmailsEndpoint;
@@ -59,6 +68,8 @@ class ApiFacade
         $this->auth = $authEndpoint;
         $this->createProxyEmailEndpoint = $createProxyEmailEndpoint;
         $this->updateProxyEmails = $updateProxyEmails;
+        $this->getReceivedEmailsLinks = $getReceivedEmailsLinks;
+        $this->getReceivedEmailsDetails = $getReceivedEmailsDetails;
     }
 
     /**
@@ -186,6 +197,21 @@ class ApiFacade
         return $r;
     }
 
+    public function getReceivedEmailsLinksByProxyEmailId(string $id): ReceivedEmailLinksEntityCollection
+    {
+        /**
+         * @var ReceivedEmailLinksEntityCollection|ErrorResponseEntity $r
+         */
+        $r = $this->endpointService->call(
+            $this->getReceivedEmailsLinks,
+            [],
+            [
+                'id' => $id,
+            ]);
+        $this->mapError($r);
+
+        return $r;
+    }
 
 
     /**
