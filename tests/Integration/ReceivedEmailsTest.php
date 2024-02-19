@@ -63,12 +63,39 @@ class ReceivedEmailsTest extends IntegrationTestCase
         $wh = $api->getProxyEmails();
 
         $pb = $wh->getProxyBindings()[0];
-        mail($pb->getProxyAddress(), 'Test', 'Test message');
+
+        $api->internalSendMail('test', $pb->getProxyAddress(), 'Test');
+
         sleep(10);
+
 
 
         $emailsList = $api->getReceivedEmailsLinksByProxyEmailId($pb->getId());
         $this->assertInstanceOf(ReceivedEmailLinksEntityCollection::class, $emailsList);
-        $this->assertEmpty($emailsList->getReceivedEmailLinks());
+        $this->assertNotEmpty($emailsList->getReceivedEmailLinks());
+
+
+        $entity = $emailsList->getReceivedEmailLinks()[0];
+        $this->assertNotEmpty($entity->getId());
+        $this->assertNotEmpty($entity->getSubject());
+        $this->assertNotEmpty($entity->getRecipientEmail());
+        $this->assertEquals($entity->getAttachmentsCounter(), 0);
+        $this->assertNotEmpty($entity->getLink());
+        $this->assertNotEmpty($entity->getLink());
+
+        $email = $api->getReceivedEmailDetailsByReceivedEmailId($entity->getId());
+
+        $payload = $email->getPayload();
+
+        $this->assertNotEmpty($payload);
+        $this->assertNotEmpty($payload['stripped-html']);
+        $this->assertNotEmpty($payload['Content-Type']);
+        $this->assertNotEmpty($payload['From']);
+        $this->assertNotEmpty($payload['Sender']);
+        $this->assertNotEmpty($payload['Subject']);
+        $this->assertNotEmpty($payload['To']);
+        $this->assertNotEmpty($payload['body-html']);
+
+
     }
 }

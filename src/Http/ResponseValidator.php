@@ -16,7 +16,7 @@ class ResponseValidator
     {
         $json = $response->getResponseJson();
 
-        if (!empty($json['status']) && $json['status'] === 'ok') {
+        if (!empty($json['status']) && ($json['status'] === 'ok' || $json['status'] === 'success')) {
             return ;
         }
 
@@ -25,7 +25,9 @@ class ResponseValidator
         }
 
         if (!isset($json['data'])) {
-            throw new InvalidApiResponseException('Invalid response. No data found');
+            throw new InvalidApiResponseException(
+                "Invalid response. No data found. Response: \n" . json_encode($json, JSON_PRETTY_PRINT)
+            );
         }
     }
 }

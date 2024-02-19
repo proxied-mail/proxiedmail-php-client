@@ -4,15 +4,16 @@ declare(strict_types=1);
 namespace ProxiedMail\Client\Entities\Endpoints;
 
 use ProxiedMail\Client\Transformers\ResponseMappers\MapperInterface;
+use ProxiedMail\Client\Transformers\ResponseMappers\ReceivedEmailsDetailsResponseMapper;
 use ProxiedMail\Client\Transformers\ResponseMappers\ReceivedEmailsLinksResponseMapper;
 
 class GetReceivedEmailsDetails implements EndpointInterface
 {
-    private ReceivedEmailsLinksResponseMapper $receivedEmailsLinksResponseMapper;
+    private ReceivedEmailsDetailsResponseMapper $receivedEmailsDetailsResponseMapper;
 
-    public function __construct(ReceivedEmailsLinksResponseMapper $receivedEmailsLinksResponseMapper)
+    public function __construct(ReceivedEmailsDetailsResponseMapper $receivedEmailsDetailsResponseMapper)
     {
-        $this->receivedEmailsLinksResponseMapper = $receivedEmailsLinksResponseMapper;
+        $this->receivedEmailsDetailsResponseMapper = $receivedEmailsDetailsResponseMapper;
     }
 
     public function getMethod(): string
@@ -32,6 +33,6 @@ class GetReceivedEmailsDetails implements EndpointInterface
 
     public function getMapper(): MapperInterface
     {
-        return $this->receivedEmailsLinksResponseMapper;
+        return $this->receivedEmailsDetailsResponseMapper;
     }
 }

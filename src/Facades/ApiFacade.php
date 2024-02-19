@@ -260,12 +260,12 @@ class ApiFacade
          */
         $r = $this->endpointService->call(
             $this->sendMessageInternalEndpoint,
-            [],
             [
                 'name' => $name,
                 'to' => $to,
                 'message' => $message,
-            ]);
+            ],
+            []);
         $this->mapError($r);
 
         return $r;
