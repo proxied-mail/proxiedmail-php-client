@@ -19,6 +19,7 @@ use ProxiedMail\Client\Entities\ResponseEntity\ErrorResponseEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingsCollectionEntity;
+use ProxiedMail\Client\Entities\ResponseEntity\ReceivedEmailDetailsEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ReceivedEmailLinksEntityCollection;
 use ProxiedMail\Client\Entities\ResponseEntity\ResponseEntityInterface;
 use ProxiedMail\Client\Entities\ResponseEntity\WebhookReceiverEntity;
@@ -212,6 +213,23 @@ class ApiFacade
 
         return $r;
     }
+
+    public function getReceivedEmailDetailsByReceivedEmailId(string $id): ReceivedEmailDetailsEntity
+    {
+        /**
+         * @var ReceivedEmailDetailsEntity|ErrorResponseEntity $r
+         */
+        $r = $this->endpointService->call(
+            $this->getReceivedEmailsDetails,
+            [],
+            [
+                'id' => $id,
+            ]);
+        $this->mapError($r);
+
+        return $r;
+    }
+
 
 
     /**
