@@ -25,6 +25,8 @@ class ProxyBindingEntity implements ResponseEntityInterface
 
     private int $type;
 
+    private bool $isBrowsable;
+
     public function __construct(
         string $id,
         RealAddressDetailedCollectionEntity $addressDetailedCollectionEntity,
@@ -34,7 +36,8 @@ class ProxyBindingEntity implements ResponseEntityInterface
         string $description,
         string $callbackUrl,
         string $createdAt,
-        string $updatedAt
+        string $updatedAt,
+        bool $isBrowsable = false
     ) {
         $this->id = $id;
         $this->addressDetailedCollectionEntity = $addressDetailedCollectionEntity;
@@ -45,12 +48,17 @@ class ProxyBindingEntity implements ResponseEntityInterface
         $this->callbackUrl = $callbackUrl;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+        $this->isBrowsable = $isBrowsable;
     }
-
 
     public function getType(): string
     {
         return self::TYPE;
+    }
+
+    public function isBrowsable(): bool
+    {
+        return $this->isBrowsable;
     }
 
     /**

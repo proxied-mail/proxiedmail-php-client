@@ -13,9 +13,11 @@ use ProxiedMail\Client\Entities\Endpoints\GetProxyEmailsEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\GetReceivedEmailsDetails;
 use ProxiedMail\Client\Entities\Endpoints\GetReceivedEmailsLinks;
 use ProxiedMail\Client\Entities\Endpoints\GetWebhookStatusEndpoint;
+use ProxiedMail\Client\Entities\Endpoints\SendMessageInternalEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\UpdateProxyEmailsEndpoint;
 use ProxiedMail\Client\Entities\ResponseEntity\ApiTokenEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ErrorResponseEntity;
+use ProxiedMail\Client\Entities\ResponseEntity\NullableEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\OauthAccessTokenEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingEntity;
 use ProxiedMail\Client\Entities\ResponseEntity\ProxyBindingsCollectionEntity;
@@ -49,6 +51,8 @@ class ApiFacade
 
     private GetReceivedEmailsDetails $getReceivedEmailsDetails;
 
+    private SendMessageInternalEndpoint $sendMessageInternalEndpoint;
+
     public function __construct(
         EndpointService $endpointService,
         GetProxyEmailsEndpoint $getProxyEmailsEndpoint,
@@ -59,7 +63,8 @@ class ApiFacade
         CreateProxyEmailEndpoint $createProxyEmailEndpoint,
         UpdateProxyEmailsEndpoint $updateProxyEmails,
         GetReceivedEmailsLinks $getReceivedEmailsLinks,
-        GetReceivedEmailsDetails $getReceivedEmailsDetails
+        GetReceivedEmailsDetails $getReceivedEmailsDetails,
+        SendMessageInternalEndpoint $sendMessageInternalEndpoint
     ) {
         $this->endpointService = $endpointService;
         $this->getProxyEmailsEndpoint = $getProxyEmailsEndpoint;
@@ -71,6 +76,7 @@ class ApiFacade
         $this->updateProxyEmails = $updateProxyEmails;
         $this->getReceivedEmailsLinks = $getReceivedEmailsLinks;
         $this->getReceivedEmailsDetails = $getReceivedEmailsDetails;
+        $this->sendMessageInternalEndpoint = $sendMessageInternalEndpoint;
     }
 
     /**
@@ -151,7 +157,8 @@ class ApiFacade
         array $realAddresses = [],
         ?string $proxyAddress = null,
         ?string $callbackUrl = null,
-        ?string $description = null
+        ?string $description = null,
+        bool $isBrowsable = false
     ): ProxyBindingEntity {
         /**
          * @var ProxyBindingEntity|ErrorResponseEntity $r
@@ -163,6 +170,7 @@ class ApiFacade
                 'proxy_address' => $proxyAddress,
                 'callback_url' => $callbackUrl ?? '',
                 'description' => $description ?? '',
+                'is_browsable' => $isBrowsable,
             ]
         );
         $this->mapError($r);
@@ -228,6 +236,44 @@ class ApiFacade
         $this->mapError($r);
 
         return $r;
+    }
+
+    /**
+     * Please note that it's created for testing purposes
+     * Do not use as it shouldn't work for you
+     * If you need email sending functionality please contact us
+     * @param string $name
+     * @param string $to
+     * @param string $message
+     * @return NullableEntity
+     * @throws FacadeApiErrorException
+     * @throws GuzzleException
+     */
+    public function internalSendMail(
+        string $name,
+        string $to,
+        string $message
+    ): NullableEntity
+    {
+        /**
+         * @var NullableEntity|ErrorResponseEntity $r
+         */
+        $r = $this->endpointService->call(
+            $this->sendMessageInternalEndpoint,
+            [],
+            [
+                'name' => $name,
+                'to' => $to,
+                'message' => $message,
+            ]);
+        $this->mapError($r);
+
+        return $r;
+    }
+
+    public function generateInternalEmail(): string
+    {
+        return md5(uniqid() . time()) . '@proxiedmail-int.int';
     }
 
     /**
