@@ -230,8 +230,6 @@ class ApiFacade
         return $r;
     }
 
-
-
     /**
      * @param ResponseEntityInterface $r
      * @throws FacadeApiErrorException
