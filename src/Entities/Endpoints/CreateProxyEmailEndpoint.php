@@ -35,6 +35,7 @@ class CreateProxyEmailEndpoint implements EndpointInterface
                     'proxy_address' => $arguments['proxy_address'],
                     'callback_url' => $arguments['callback_url'],
                     'description' => $arguments['description'],
+                    'is_browsable' => $arguments['is_browsable'],
                 ],
             ],
         ];
