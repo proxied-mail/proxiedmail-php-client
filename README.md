@@ -292,6 +292,51 @@ php t.php
         $pb = $wh->getProxyBindings()[0];
 ```
 
+#### List of received emails
+
+Please note that you can see received emails only for proxy-emails with is_browsable opted as true.
+You can still update is_browsable attribute when you don't when you don't have any received emails yet.
+
+```php
+<?php
+        $api = $this->getApiReady();
+        $api->createProxyEmail(
+            [
+                $api->generateInternalEmail(),
+            ],
+            null,
+            null,
+            null,
+            true //opt in is_browsable
+        );
+        
+        $wh = $api->getProxyEmails();
+        /**
+         * @var ProxyBindingEntity $pb
+         */
+        $pb = $wh->getProxyBindings()[0]; //pick up the last one we created
+
+        $emailsList = $api->getReceivedEmailsLinksByProxyEmailId($pb->getId());
+
+        $entity = $emailsList->getReceivedEmailLinks()[0];
+        $receivedEmailId = $entity->getId();
+        $subject = $entity->getSubject();
+        $recipientEmail = $entity->getRecipientEmail();
+        $attachmentCounter = $entity->getAttachmentsCounter();
+
+        $emailDetails = $api->getReceivedEmailDetailsByReceivedEmailId($entity->getId());
+        
+        $payload = $email->getPayload();
+
+        $strippedHtml = $payload['stripped-html'];
+        $contentType = $payload['Content-Type'];
+        $from = $payload['From'];
+        $sender = $payload['Sender'];
+        $subject = $payload['Subject'];
+        $to = $payload['To'];
+        $bodyHtml = $payload['body-html'];
+```
+
 
 #### Other examples
 

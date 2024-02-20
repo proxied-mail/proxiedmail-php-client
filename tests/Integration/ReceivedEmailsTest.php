@@ -81,7 +81,6 @@ class ReceivedEmailsTest extends IntegrationTestCase
         $this->assertNotEmpty($entity->getRecipientEmail());
         $this->assertEquals($entity->getAttachmentsCounter(), 0);
         $this->assertNotEmpty($entity->getLink());
-        $this->assertNotEmpty($entity->getLink());
 
         $email = $api->getReceivedEmailDetailsByReceivedEmailId($entity->getId());
 
