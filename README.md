@@ -366,3 +366,11 @@ As you may see we have DI built-in in our client to make less dependencies as it
 
 Please note that if you want to change config in terms of host, bearer or api token over program execution 
 please RE-Initialize via `PxdMailApinitializer::init()` with new config object.
+
+## Bonus
+
+If you're interested please check out our [Laravel client](https://github.com/proxied-mail/laravel-receive-email).
+Article: [how to receive email in Laravel](https://proxiedmail.com/en/blog/how-to-receive-email-with-laravel).
+Article [how to receive email in PHP](https://dev.to/yatsenkolesh/how-to-receive-email-with-php-3k21).
+
+
