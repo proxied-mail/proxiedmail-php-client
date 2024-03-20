@@ -238,6 +238,32 @@ class ApiFacade
         return $r;
     }
 
+    public function waitUntilNextEmail(
+        string $proxyEmailId,
+        int $triesLimit = 60,
+        int $triesIntervalSeconds = 1,
+    ): ?ReceivedEmailDetailsEntity {
+        $receivedEmails = $this->getReceivedEmailsLinksByProxyEmailId($proxyEmailId);
+        $count = count($receivedEmails->getReceivedEmailLinks());
+        foreach (range(0, $triesLimit) as $try) {
+            if ($try > 0) {
+                sleep($triesIntervalSeconds);
+            }
+
+            $receivedEmails = $this->getReceivedEmailsLinksByProxyEmailId($proxyEmailId);
+            if (count($receivedEmails->getReceivedEmailLinks()) > $count) {
+                break;
+            }
+        }
+
+        if (count($receivedEmails->getReceivedEmailLinks()) === $count) {
+            return null;
+        }
+
+        $newEmail = $receivedEmails->getReceivedEmailLinks()[count($receivedEmails->getReceivedEmailLinks()) - 1];
+        return $this->getReceivedEmailDetailsByReceivedEmailId($newEmail->getId());
+    }
+
     /**
      * Please note that it's created for testing purposes
      * Do not use as it shouldn't work for you

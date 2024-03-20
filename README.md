@@ -337,6 +337,14 @@ You can still update is_browsable attribute when you don't when you don't have a
         $bodyHtml = $payload['body-html'];
 ```
 
+Also you can try simplified version of it:
+```php
+        $entity = $api->waitUntilNextEmail($pb->getId()); //get by proxy email id
+        $payload = $entity->getPayload();
+```
+But please pay attention that on the moment of the run email shouldn't be received yet.
+Otherwise it's going to hugh for some time.
+
 
 #### Other examples
 
