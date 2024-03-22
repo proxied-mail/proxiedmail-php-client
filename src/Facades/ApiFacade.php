@@ -242,9 +242,10 @@ class ApiFacade
         string $proxyEmailId,
         int $triesLimit = 60,
         int $triesIntervalSeconds = 1,
+        ?int $counterInitial = null
     ): ?ReceivedEmailDetailsEntity {
         $receivedEmails = $this->getReceivedEmailsLinksByProxyEmailId($proxyEmailId);
-        $count = count($receivedEmails->getReceivedEmailLinks());
+        $count = $counterInitial === null ? count($receivedEmails->getReceivedEmailLinks()) : $counterInitial;
         foreach (range(0, $triesLimit) as $try) {
             if ($try > 0) {
                 sleep($triesIntervalSeconds);
