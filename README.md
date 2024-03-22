@@ -342,6 +342,16 @@ Also you can try simplified version of it:
         $entity = $api->waitUntilNextEmail($pb->getId()); //get by proxy email id
         $payload = $entity->getPayload();
 ```
+
+In case you're going to receive first email using this 
+function you can pass 0 initial value and receive any email that even was there before the function call.
+
+```php
+        $api->internalSendMail('test', $pb->getProxyAddress(), 'Test');
+        sleep(5);
+        $entity = $api->waitUntilNextEmail($pb->getId(), 60, 1, 0); // id, max tried, timeout sec, initial value
+```
+
 But please pay attention that on the moment of the run email shouldn't be received yet.
 Otherwise it's going to hugh for some time.
 
