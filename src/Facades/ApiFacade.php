@@ -153,12 +153,29 @@ class ApiFacade
         return $r;
     }
 
-    public function createProxyEmail(
+    public function createNotBrowsableProxyEmail(
         array $realAddresses = [],
         ?string $proxyAddress = null,
         ?string $callbackUrl = null,
         ?string $description = null,
         bool $isBrowsable = false
+    ) {
+        return $this->createProxyEmail(
+            $realAddresses,
+            $proxyAddress,
+            $callbackUrl,
+            $description,
+            $isBrowsable
+        );
+    }
+
+
+    public function createProxyEmail(
+        array $realAddresses = [],
+        ?string $proxyAddress = null,
+        ?string $callbackUrl = null,
+        ?string $description = null,
+        bool $isBrowsable = true
     ): ProxyBindingEntity {
         /**
          * @var ProxyBindingEntity|ErrorResponseEntity $r

@@ -14,7 +14,7 @@ class ReceivedEmailsTest extends IntegrationTestCase
     public function testReceivedEmailsNotBrowsableError()
     {
         $api = $this->getApiReady();
-        $api->createProxyEmail();
+        $api->createNotBrowsableProxyEmail();
         $wh = $api->getProxyEmails();
 
         $pb = $wh->getProxyBindings()[0];
