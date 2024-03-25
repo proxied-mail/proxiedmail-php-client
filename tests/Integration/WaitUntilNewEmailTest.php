@@ -19,10 +19,6 @@ class WaitUntilNewEmailTest extends IntegrationTestCase
             [
                 $api->generateInternalEmail(),
             ],
-            null,
-            null,
-            null,
-            true
         );
         $wh = $api->getProxyEmails();
 
@@ -39,10 +35,6 @@ class WaitUntilNewEmailTest extends IntegrationTestCase
             [
                 $api->generateInternalEmail(),
             ],
-            null,
-            null,
-            null,
-            true
         );
         $wh = $api->getProxyEmails();
 
@@ -72,10 +64,6 @@ class WaitUntilNewEmailTest extends IntegrationTestCase
             [
                 $api->generateInternalEmail(),
             ],
-            null,
-            null,
-            null,
-            true
         );
         $wh = $api->getProxyEmails();
 
@@ -99,4 +87,35 @@ class WaitUntilNewEmailTest extends IntegrationTestCase
         $this->assertNotEmpty($payload['body-html']);
     }
 
+    public function testReceivedEmailsListWaitUntilFirst()
+    {
+        $api = $this->getApiReady();
+        $api->createProxyEmail(
+            [
+                $api->generateInternalEmail(),
+            ],
+        );
+        $wh = $api->getProxyEmails();
+
+        $pb = $wh->getProxyBindings()[0];
+
+        $api->internalSendMail('test', $pb->getProxyAddress(), 'Test');
+
+        sleep(5);
+
+        $entity = $api->waitUntilFirstEmail($pb->getId());
+
+        $email = $api->getReceivedEmailDetailsByReceivedEmailId($entity->getId());
+
+        $payload = $email->getPayload();
+
+        $this->assertNotEmpty($payload);
+        $this->assertNotEmpty($payload['stripped-html']);
+        $this->assertNotEmpty($payload['Content-Type']);
+        $this->assertNotEmpty($payload['From']);
+        $this->assertNotEmpty($payload['Sender']);
+        $this->assertNotEmpty($payload['Subject']);
+        $this->assertNotEmpty($payload['To']);
+        $this->assertNotEmpty($payload['body-html']);
+    }
 }
