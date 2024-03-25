@@ -352,6 +352,14 @@ function you can pass 0 initial value and receive any email that even was there 
         $entity = $api->waitUntilNextEmail($pb->getId(), 60, 1, 0); // id, max tried, timeout sec, initial value
 ```
 
+OR with the first email:
+```php
+        $entity = $api->waitUntilFirstEmail($pb->getId());
+        $email = $api->getReceivedEmailDetailsByReceivedEmailId($entity->getId());
+        $payload = $email->getPayload();
+```
+
+
 But please pay attention that on the moment of the run email shouldn't be received yet.
 Otherwise it's going to hugh for some time.
 

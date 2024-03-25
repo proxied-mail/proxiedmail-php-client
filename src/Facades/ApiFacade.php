@@ -255,6 +255,14 @@ class ApiFacade
         return $r;
     }
 
+    public function waitUntilFirstEmail(
+        string $proxyEmailId,
+        int $triesLimit = 60,
+        int $triesIntervalSeconds = 1,
+    ): ?ReceivedEmailDetailsEntity {
+        return $this->waitUntilNextEmail($proxyEmailId, $triesLimit, $triesIntervalSeconds, 0);
+    }
+    
     public function waitUntilNextEmail(
         string $proxyEmailId,
         int $triesLimit = 60,
