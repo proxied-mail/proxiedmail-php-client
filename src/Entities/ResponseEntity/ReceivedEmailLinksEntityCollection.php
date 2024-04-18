@@ -22,6 +22,11 @@ class ReceivedEmailLinksEntityCollection implements ResponseEntityInterface
         return $this->receivedEmailLinks;
     }
 
+    public function first(): ?ReceivedEmailLinkEntity
+    {
+        return $this->receivedEmailLinks[0] ?? null;
+    }
+
     public function getType(): string
     {
         return self::TYPE;

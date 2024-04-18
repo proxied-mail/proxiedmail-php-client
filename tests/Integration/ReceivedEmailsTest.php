@@ -94,7 +94,5 @@ class ReceivedEmailsTest extends IntegrationTestCase
         $this->assertNotEmpty($payload['Subject']);
         $this->assertNotEmpty($payload['To']);
         $this->assertNotEmpty($payload['body-html']);
-
-
     }
 }

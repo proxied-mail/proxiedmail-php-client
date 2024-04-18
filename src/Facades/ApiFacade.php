@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use ProxiedMail\Client\Entities\Endpoints\AuthEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\CreateProxyEmailEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\CreateWebhookReceiverEndpoint;
+use ProxiedMail\Client\Entities\Endpoints\FlushReceivedEmailEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\GetApiTokenEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\GetProxyEmailsEndpoint;
 use ProxiedMail\Client\Entities\Endpoints\GetReceivedEmailsDetails;
@@ -53,6 +54,8 @@ class ApiFacade
 
     private SendMessageInternalEndpoint $sendMessageInternalEndpoint;
 
+    private FlushReceivedEmailEndpoint $flushReceivedEmailEndpoint;
+
     public function __construct(
         EndpointService $endpointService,
         GetProxyEmailsEndpoint $getProxyEmailsEndpoint,
@@ -64,7 +67,8 @@ class ApiFacade
         UpdateProxyEmailsEndpoint $updateProxyEmails,
         GetReceivedEmailsLinks $getReceivedEmailsLinks,
         GetReceivedEmailsDetails $getReceivedEmailsDetails,
-        SendMessageInternalEndpoint $sendMessageInternalEndpoint
+        SendMessageInternalEndpoint $sendMessageInternalEndpoint,
+        FlushReceivedEmailEndpoint $flushReceivedEmailEndpoint
     ) {
         $this->endpointService = $endpointService;
         $this->getProxyEmailsEndpoint = $getProxyEmailsEndpoint;
@@ -77,6 +81,7 @@ class ApiFacade
         $this->getReceivedEmailsLinks = $getReceivedEmailsLinks;
         $this->getReceivedEmailsDetails = $getReceivedEmailsDetails;
         $this->sendMessageInternalEndpoint = $sendMessageInternalEndpoint;
+        $this->flushReceivedEmailEndpoint = $flushReceivedEmailEndpoint;
     }
 
     /**
@@ -238,6 +243,23 @@ class ApiFacade
 
         return $r;
     }
+
+    public function flushReceivedEmail(string $id): NullableEntity
+    {
+        /**
+         * @var NullableEntity|ErrorResponseEntity $r
+         */
+        $r = $this->endpointService->call(
+            $this->flushReceivedEmailEndpoint,
+            [],
+            [
+                'id' => $id,
+            ]);
+        $this->mapError($r);
+
+        return $r;
+    }
+
 
     public function getReceivedEmailDetailsByReceivedEmailId(string $id): ReceivedEmailDetailsEntity
     {

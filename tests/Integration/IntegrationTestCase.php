@@ -43,7 +43,6 @@ class IntegrationTestCase extends BaseTestCase
         return PxdMailApinitializer::init($config);
     }
 
-
     private function parseEnv(): array
     {
         $env = file_get_contents(__DIR__ . '/../../.env');
