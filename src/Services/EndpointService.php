@@ -36,6 +36,7 @@ class EndpointService
 
     /**
      * @throws GuzzleException
+     * @throws ServerErrorApiResponseException
      */
     public function call(
         EndpointInterface $endpoint,
@@ -57,10 +58,11 @@ class EndpointService
             $headers['Authorization'] = $this->config->getBearerToken();
         }
 
+        $url = $this->config->getHost() . $endpoint->getUrl($urlParams);
         try {
             $response = $this->requestExecutor->execute(new Request(
                 $endpoint->getMethod(),
-                $this->config->getHost() . $endpoint->getUrl($urlParams),
+                $url,
                 $payload,
                 $headers,
             ));
